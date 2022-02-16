@@ -131,6 +131,12 @@ static const scpi_command_t scpi_commands[] = {
     {.pattern = "RP:FPGABITREAM", .callback             = RP_FpgaBitStream,},
     {.pattern = "RP:DIg[:loop]", .callback              = RP_EnableDigLoop,},
 
+#ifdef Z20_250_12
+    {.pattern = "RP:PLL", .callback                     = RP_PllControl,},
+    {.pattern = "RP:PLL?", .callback                    = RP_PllControlQ,},
+    {.pattern = "RP:PLL:LOCk?", .callback               = RP_PllControlLockedQ,},
+    {.pattern = "RP:PLL:DETected?", .callback           = RP_PllControlDetectedQ,},
+#endif
     {.pattern = "DIG:RST", .callback                    = RP_DigitalPinReset,},
     {.pattern = "DIG:PIN", .callback                    = RP_DigitalPinState,},
     {.pattern = "DIG:PIN?", .callback                   = RP_DigitalPinStateQ,},
