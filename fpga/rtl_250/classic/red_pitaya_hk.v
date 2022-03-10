@@ -67,7 +67,9 @@ module red_pitaya_hk #(
   input                sys_ren    ,  // bus read enable
   output reg [ 32-1:0] sys_rdata  ,  // bus read data
   output reg           sys_err    ,  // bus error indicator
-  output reg           sys_ack       // bus acknowledge signal
+  output reg           sys_ack    ,  // bus acknowledge signal
+  // Timestamp
+  output reg [ 64-1:0] timestamp     // Timestamp counter
 );
 
 //---------------------------------------------------------------------------------
@@ -90,6 +92,7 @@ if (rstn_i == 1'b0) begin
   dna_cnt   <=  9'd0;
   dna_value <= 57'd0;
   dna_done  <=  1'b0;
+  timestamp <= 64'b0;
 end else begin
   if (!dna_done)
     dna_cnt <= dna_cnt + 1'd1;
@@ -103,6 +106,8 @@ end else begin
 
   if (dna_cnt > 9'd465)
     dna_done <= 1'b1;
+
+  timestamp <= timestamp + 1'd1;
 end
 
 // parameter specifies a sample 57-bit DNA value for simulation
@@ -381,6 +386,9 @@ end else begin
     20'h00060: begin sys_ack <= sys_en;  sys_rdata <= {16'h0,spi_wr_h[1]}                 ; end
     20'h00064: begin sys_ack <= sys_en;  sys_rdata <= {16'h0,spi_wr_l[1]}                 ; end
     20'h00068: begin sys_ack <= sys_en;  sys_rdata <= {15'h0,spi_bsy[1],  spi_rd_l[1]}    ; end
+
+    20'h0006C: begin sys_ack <= sys_en;  sys_rdata <= {timestamp[32-1:0]}                 ; end
+    20'h00070: begin sys_ack <= sys_en;  sys_rdata <= {timestamp[64-1:32]}                ; end
 
       default: begin sys_ack <= sys_en;  sys_rdata <=  32'h0                              ; end
   endcase

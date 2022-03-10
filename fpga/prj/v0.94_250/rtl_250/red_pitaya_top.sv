@@ -191,6 +191,9 @@ gpio_if #(.DW (24)) gpio ();
 // SPI0
 spi_if #(.DW (2)) spi0 ();
 
+// Timestamp
+logic [64-1:0] timestamp;
+
 ////////////////////////////////////////////////////////////////////////////////
 // PLL (clock and reset)
 ////////////////////////////////////////////////////////////////////////////////
@@ -580,7 +583,9 @@ i_hk (
   .sys_ren         (sys[0].ren  ),
   .sys_rdata       (sys[0].rdata),
   .sys_err         (sys[0].err  ),
-  .sys_ack         (sys[0].ack  )
+  .sys_ack         (sys[0].ack  ),
+  // Timestamp
+  .timestamp (timestamp)
 );
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -634,7 +639,9 @@ red_pitaya_scope i_scope (
   .sys_ren       (sys[1].ren  ),
   .sys_rdata     (sys[1].rdata),
   .sys_err       (sys[1].err  ),
-  .sys_ack       (sys[1].ack  )
+  .sys_ack       (sys[1].ack  ),
+  // Timestamp
+  .timestamp (timestamp)
 );
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -661,7 +668,9 @@ red_pitaya_asg i_asg (
   .sys_ren         (sys[2].ren  ),
   .sys_rdata       (sys[2].rdata),
   .sys_err         (sys[2].err  ),
-  .sys_ack         (sys[2].ack  )
+  .sys_ack         (sys[2].ack  ),
+  // Timestamp
+  .timestamp (timestamp)
 );
 
 ////////////////////////////////////////////////////////////////////////////////
