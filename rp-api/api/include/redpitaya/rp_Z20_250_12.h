@@ -1651,6 +1651,14 @@ int rp_SetPllControlEnable(bool enable);
 */
 int rp_GetPllControlLocked(bool *status);
 
+/**
+* Only works with Redpitaya 250-12 otherwise returns RP_NOTS
+* @param status Get current state.
+* @return If the function is successful, the return value is RP_OK.
+* If the function is unsuccessful, the return value is any of RP_E* values that indicate an error.
+*/
+int rp_GetPllControlDetected(bool *status);
+
 
 
 /**

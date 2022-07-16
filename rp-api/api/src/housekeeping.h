@@ -110,4 +110,13 @@ int house_GetPllControlLocked(bool *status){
 #endif
 }
 
+int house_GetPllControlDetected(bool *status){
+#ifdef Z20_250_12
+    *status = hk->pll_control.refDetected;
+    return RP_OK;
+#else
+    return RP_NOTS;
+#endif
+}
+
 #endif //__HOUSEKEEPING_H
