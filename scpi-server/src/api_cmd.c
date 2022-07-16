@@ -174,3 +174,57 @@ scpi_result_t RP_EnableDigLoop(scpi_t *context){
 
     return SCPI_RES_OK;
 }
+
+#ifdef Z20_250_12
+
+scpi_result_t RP_PllControl(scpi_t *context){
+    bool state_c;
+
+    if(!SCPI_ParamBool(context, &state_c, true)){
+        RP_LOG(LOG_ERR, "*RP:PLL Missing first parameter.\n");
+        return SCPI_RES_ERR;
+    }
+    
+    rp_SetPllControlEnable(state_c);
+
+    RP_LOG(LOG_INFO, "*RP:PLL Successfully enabled PLL.\n");
+
+    return SCPI_RES_OK;
+}
+
+scpi_result_t RP_PllControlQ(scpi_t *context){
+    bool state_c;
+    
+    rp_GetPllControlEnable(&state_c);
+
+    SCPI_ResultBool(context, state_c);
+
+    RP_LOG(LOG_INFO, "*RP:PLL Successfully returned PLL state.\n");
+
+    return SCPI_RES_OK;
+}
+
+scpi_result_t RP_PllControlLockedQ(scpi_t *context){
+    bool state_c;
+    
+    rp_GetPllControlLocked(&state_c);
+
+    SCPI_ResultBool(context, state_c);
+
+    RP_LOG(LOG_INFO, "*RP:PLL Successfully returned PLL lock-state.\n");
+
+    return SCPI_RES_OK;
+}
+
+scpi_result_t RP_PllControlDetectedQ(scpi_t *context){
+    bool state_c = true;
+    
+    rp_GetPllControlDetected(&state_c);
+
+    SCPI_ResultBool(context, state_c);
+
+    RP_LOG(LOG_INFO, "*RP:PLL Successfully returned PLL detection-state.\n");
+
+    return SCPI_RES_OK;
+}
+#endif
