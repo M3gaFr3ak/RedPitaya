@@ -67,7 +67,9 @@ module red_pitaya_asg (
   input                 sys_ren   ,  // bus read enable
   output reg [ 32-1: 0] sys_rdata ,  // bus read data
   output reg            sys_err   ,  // bus error indicator
-  output reg            sys_ack      // bus acknowledge signal
+  output reg            sys_ack   ,   // bus acknowledge signal
+  // Timestamp
+  input [ 64-1:0] timestamp     // Timestamp counter
 );
 
 wire [2-1:0] temp_prot ;
@@ -107,6 +109,8 @@ reg               trig_a_sw    , trig_b_sw    ;
 reg   [   3-1: 0] trig_a_src   , trig_b_src   ;
 wire              trig_a_done  , trig_b_done  ;
 
+reg[64-1: 0] trig_a_timestamp, trig_b_timestamp;
+
 red_pitaya_asg_ch  #(.RSZ (RSZ)) ch [1:0] (
   // DAC
   .dac_o           ({ dac_b_o                     ,  dac_a_o                      }),  // dac data output
@@ -140,8 +144,7 @@ red_pitaya_asg_ch  #(.RSZ (RSZ)) ch [1:0] (
   .set_rgate_i     ({ set_b_rgate                 ,  set_a_rgate                  })   // set external gated repetition
 );
 
-always @(posedge sys_clk)
-begin
+always @(posedge sys_clk) begin
    buf_a_we   <= sys_wen && (sys_addr[19:RSZ+2] == 'h1);
    buf_b_we   <= sys_wen && (sys_addr[19:RSZ+2] == 'h2);
    buf_a_addr <= sys_addr[RSZ+1:2] ;  // address timing violation
@@ -149,6 +152,15 @@ begin
 end
 
 assign trig_out_o = trig_a_done ;
+
+// Timestamp
+always @(posedge dac_clk_i)
+begin
+   if (trig_a_done == 1'b0)
+      trig_a_timestamp <= timestamp;
+   if (trig_b_done == 1'b0)
+      trig_b_timestamp <= timestamp;
+end
 
 //---------------------------------------------------------------------------------
 //
@@ -278,6 +290,13 @@ end else begin
 
      20'h1zzzz : begin sys_ack <= ack_dly;         sys_rdata <= {{32-14{1'b0}},buf_a_rdata}        ; end
      20'h2zzzz : begin sys_ack <= ack_dly;         sys_rdata <= {{32-14{1'b0}},buf_b_rdata}        ; end
+
+     20'h00044 : begin sys_ack <= sys_en;          sys_rdata <= {timestamp[32-1:0]}                ; end
+     20'h00048 : begin sys_ack <= sys_en;          sys_rdata <= {timestamp[64-1:32]}               ; end
+     20'h0004C : begin sys_ack <= sys_en;          sys_rdata <= {trig_a_timestamp[32-1:0]}                ; end
+     20'h00050 : begin sys_ack <= sys_en;          sys_rdata <= {trig_a_timestamp[64-1:32]}               ; end
+     20'h00054 : begin sys_ack <= sys_en;          sys_rdata <= {trig_b_timestamp[32-1:0]}                ; end
+     20'h00058 : begin sys_ack <= sys_en;          sys_rdata <= {trig_b_timestamp[64-1:32]}               ; end
 
        default : begin sys_ack <= sys_en;          sys_rdata <=  32'h0                             ; end
    endcase

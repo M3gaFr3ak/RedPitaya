@@ -91,11 +91,15 @@ module red_pitaya_scope #(
    input                 sys_ren       ,  // bus read enable
    output reg [ 32-1: 0] sys_rdata     ,  // bus read data
    output reg            sys_err       ,  // bus error indicator
-   output reg            sys_ack          // bus acknowledge signal
+   output reg            sys_ack       ,   // bus acknowledge signal
+   // Timestamp
+   input [ 64-1:0] timestamp     // Timestamp counter
 );
 
 reg             adc_arm_do   ;
 reg             adc_rst_do   ;
+
+reg[64-1: 0] trig_timestamp;
 
 //---------------------------------------------------------------------------------
 //  Input filtering
@@ -281,6 +285,14 @@ end else begin
       default   : begin adc_a_dat <= a_dat_div;            adc_b_dat <= b_dat_div;            adc_dv <= adc_dv_div; end
    endcase
 end
+
+//Timestamp
+always @(posedge adc_clk_i)
+begin
+   if (adc_trig == 1'b0)
+      trig_timestamp <= timestamp;
+end
+
 
 //---------------------------------------------------------------------------------
 //  ADC buffer RAM
@@ -985,6 +997,11 @@ end else begin
 
      20'h1???? : begin sys_ack <= adc_rd_dv;       sys_rdata <= {16'h0, 2'h0,adc_a_rd}              ; end
      20'h2???? : begin sys_ack <= adc_rd_dv;       sys_rdata <= {16'h0, 2'h0,adc_b_rd}              ; end
+
+     20'h00094 : begin sys_ack <= sys_en;          sys_rdata <= {timestamp[32-1:0]}                 ; end
+     20'h00098 : begin sys_ack <= sys_en;          sys_rdata <= {timestamp[64-1:32]}                ; end
+     20'h0009C : begin sys_ack <= sys_en;          sys_rdata <= {trig_timestamp[32-1:0]}                 ; end
+     20'h000A0 : begin sys_ack <= sys_en;          sys_rdata <= {trig_timestamp[64-1:32]}                ; end
 
        default : begin sys_ack <= sys_en;          sys_rdata <=  32'h0                              ; end
    endcase
