@@ -974,6 +974,10 @@ int rp_GetPllControlDetected(bool *status){
     return house_GetPllControlDetected(status);
 }
 
+int rp_GetTimestamp(uint64_t *timestamp) {
+    return house_GetTimestamp(timestamp);
+}
+
 #ifdef Z20_250_12
 int rp_GenSetGainOut(rp_channel_t channel,rp_gen_gain_t mode){
     return gen_setGainOut(channel,mode);

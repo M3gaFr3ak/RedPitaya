@@ -98,8 +98,14 @@ typedef struct generate_control_s {
     ch_properties_t properties_chA;
     ch_properties_t properties_chB;
 #ifndef Z20_250_12
-    uint32_t     BurstFinalValue_chA;
-    uint32_t     BurstFinalValue_chB;
+    uint32_t timestamp_low;
+    uint32_t timestamp_high;
+    uint32_t timestamp_trig_a_low;
+    uint32_t timestamp_trig_a_high;
+    uint32_t timestamp_trig_b_low;
+    uint32_t timestamp_trig_b_high;
+    //uint32_t     BurstFinalValue_chA;
+    //uint32_t     BurstFinalValue_chB;
 #endif
 } generate_control_t;
 
@@ -141,6 +147,9 @@ int generate_setEnableTempProtection(rp_channel_t channel, bool enable);
 int generate_getLatchTempAlarm(rp_channel_t channel, bool *state);
 int generate_setLatchTempAlarm(rp_channel_t channel, bool  state);
 int generate_getRuntimeTempAlarm(rp_channel_t channel, bool *state);
+int generate_GetTimestamp(uint64_t *timestamp);
+int generate_GetTrigATimestamp(uint64_t *timestamp);
+int generate_GetTrigBTimestamp(uint64_t *timestamp);
 //
 
 int generate_simultaneousTrigger();

@@ -52,6 +52,8 @@ typedef struct housekeeping_control_s {
     uint32_t reserved_5;
     uint32_t reserved_6;
     pll_control_t pll_control;
+    uint32_t timestamp_low;
+    uint32_t timestamp_high;
 #endif
 } housekeeping_control_t;
 
@@ -113,6 +115,15 @@ int house_GetPllControlLocked(bool *status){
 int house_GetPllControlDetected(bool *status){
 #ifdef Z20_250_12
     *status = hk->pll_control.refDetected;
+    return RP_OK;
+#else
+    return RP_NOTS;
+#endif
+}
+
+int house_GetTimestamp(uint64_t *timestamp){
+#ifdef Z20_250_12
+    *timestamp = hk->timestamp_low | (((uint64_t)hk->timestamp_high)) << 32;
     return RP_OK;
 #else
     return RP_NOTS;

@@ -206,6 +206,20 @@ typedef struct osc_control_s {
     */
     uint32_t trig_dbc_t;
 
+    /**
+     * @brief 0x94/0x98 Timestamp synchronous to HK timestamp
+     * 
+     */
+    uint32_t timestamp_low;
+    uint32_t timestamp_high;
+
+    /**
+     * @brief 0x94/0x98 Trigger timestamp
+     * 
+     */
+    uint32_t trig_timestamp_low;
+    uint32_t trig_timestamp_high;
+
     /* ChA & ChB data - 14 LSB bits valid starts from 0x10000 and
      * 0x20000 and are each 16k samples long */
 } osc_control_t;
@@ -264,6 +278,8 @@ int osc_SetEqFiltersChA(uint32_t coef_aa, uint32_t coef_bb, uint32_t coef_kk, ui
 int osc_GetEqFiltersChA(uint32_t* coef_aa, uint32_t* coef_bb, uint32_t* coef_kk, uint32_t* coef_pp);
 int osc_SetEqFiltersChB(uint32_t coef_aa, uint32_t coef_bb, uint32_t coef_kk, uint32_t coef_pp);
 int osc_GetEqFiltersChB(uint32_t* coef_aa, uint32_t* coef_bb, uint32_t* coef_kk, uint32_t* coef_pp);
+int osc_GetTimestamp(uint64_t *timestamp);
+int osc_GetTrigTimestamp(uint64_t *timestamp);
 
 const volatile uint32_t* osc_GetDataBufferChA();
 const volatile uint32_t* osc_GetDataBufferChB();

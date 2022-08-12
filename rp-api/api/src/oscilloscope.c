@@ -230,6 +230,25 @@ int osc_GetEqFiltersChB(uint32_t* coef_aa, uint32_t* coef_bb, uint32_t* coef_kk,
     return RP_OK;
 }
 
+
+int osc_GetTimestamp(uint64_t *timestamp){
+#ifdef Z20_250_12
+    *timestamp = osc_reg->timestamp_low | (((uint64_t)osc_reg->timestamp_high)) << 32;
+    return RP_OK;
+#else
+    return RP_NOTS;
+#endif
+}
+
+int osc_GetTrigTimestamp(uint64_t *timestamp){    
+#ifdef Z20_250_12
+    *timestamp = osc_reg->trig_timestamp_low | (((uint64_t)osc_reg->trig_timestamp_high)) << 32;
+    return RP_OK;
+#else
+    return RP_NOTS;
+#endif
+}
+
 /**
  * Write pointer
  */

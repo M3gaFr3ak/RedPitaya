@@ -144,6 +144,33 @@ int generate_getRuntimeTempAlarm(rp_channel_t channel, bool *state){
 
 #ifndef Z20_250_12
 
+int generate_GetTimestamp(uint64_t *timestamp){
+#ifdef Z20_250_12
+    *timestamp = generate->timestamp_low | (((uint64_t)generate->timestamp_high)) << 32;
+    return RP_OK;
+#else
+    return RP_NOTS;
+#endif
+}
+
+int generate_GetTrigATimestamp(uint64_t *timestamp){
+#ifdef Z20_250_12
+    *timestamp = generate->timestamp_trig_a_low | (((uint64_t)generate->timestamp_trig_a_high)) << 32;
+    return RP_OK;
+#else
+    return RP_NOTS;
+#endif
+}
+
+int generate_GetTrigBTimestamp(uint64_t *timestamp){
+#ifdef Z20_250_12
+    *timestamp = generate->timestamp_trig_b_low | (((uint64_t)generate->timestamp_trig_b_high)) << 32;
+    return RP_OK;
+#else
+    return RP_NOTS;
+#endif
+}
+
 int generate_setAmplitude(rp_channel_t channel, float amplitude) {
     volatile ch_properties_t *ch_properties;
     uint32_t amp_max = calib_getGenScale(channel);
