@@ -227,4 +227,12 @@ scpi_result_t RP_PllControlDetectedQ(scpi_t *context){
 
     return SCPI_RES_OK;
 }
+
+scpi_result_t RP_TimestampQ(scpi_t *context){
+    uint64_t value;
+    rp_GetTimestamp(&value);
+
+    SCPI_ResultUInt64Base(context, value, 10);
+    return SCPI_RES_OK;
+}
 #endif

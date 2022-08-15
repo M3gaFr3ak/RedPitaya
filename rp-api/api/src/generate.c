@@ -142,8 +142,6 @@ int generate_getRuntimeTempAlarm(rp_channel_t channel, bool *state){
     #endif
 }
 
-#ifndef Z20_250_12
-
 int generate_GetTimestamp(uint64_t *timestamp){
 #ifdef Z20_250_12
     *timestamp = generate->timestamp_low | (((uint64_t)generate->timestamp_high)) << 32;
@@ -170,6 +168,9 @@ int generate_GetTrigBTimestamp(uint64_t *timestamp){
     return RP_NOTS;
 #endif
 }
+
+
+#ifndef Z20_250_12
 
 int generate_setAmplitude(rp_channel_t channel, float amplitude) {
     volatile ch_properties_t *ch_properties;

@@ -1638,6 +1638,52 @@ int rp_GetPllControlLocked(bool *status);
 */
 int rp_GetPllControlDetected(bool *status);
 
+/**
+ * @brief Only for custom fpga image with timestamp
+ * 
+ * @param timestamp  Current timestamp
+ * @return If the function is successful, the return value is RP_OK.
+ * If the function is unsuccessful, the return value is any of RP_E* values that indicate an error. 
+ */
+int rp_GetTimestamp(uint64_t *timestamp);
+
+/**
+ * @brief Only for custom fpga image with timestamp
+ * 
+ * @param timestamp  Current timestamp
+ * @return If the function is successful, the return value is RP_OK.
+ * If the function is unsuccessful, the return value is any of RP_E* values that indicate an error.
+ */
+int rp_GetAcqTimestamp(uint64_t *timestamp);
+
+/**
+ * @brief Only for custom fpga image with timestamp
+ * 
+ * @param timestamp  Osc Timestamp when triggered
+ * @return If the function is successful, the return value is RP_OK.
+ * If the function is unsuccessful, the return value is any of RP_E* values that indicate an error.
+ */
+int rp_GetAcqTrigTimestamp(uint64_t *timestamp);
+
+/**
+ * @brief Only for custom fpga image with timestamp
+ * 
+ * @param timestamp  Current timestamp
+ * @return If the function is successful, the return value is RP_OK.
+ * If the function is unsuccessful, the return value is any of RP_E* values that indicate an error.
+ */
+int rp_GetGenTimestamp(uint64_t *timestamp);
+
+/**
+ * @brief Only for custom fpga image with timestamp
+ * 
+ * @param channel Targeted ASG-Channel 
+ * @param timestamp  ASG Timestamp when triggered
+ * @return If the function is successful, the return value is RP_OK.
+ * If the function is unsuccessful, the return value is any of RP_E* values that indicate an error.
+ */
+int rp_GetGenTrigTimestamp(rp_channel_t channel, uint64_t *timestamp);
+
 float rp_CmnCnvCntToV(uint32_t field_len, uint32_t cnts, float adc_max_v, uint32_t calibScale, int calib_dc_off, float user_dc_off);
 
 /**

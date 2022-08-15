@@ -898,7 +898,33 @@ scpi_result_t RP_GenOffsetQ(scpi_t *context) {
     RP_LOG(LOG_INFO, "*SOUR#:VOLT:OFFS? Successfully returned offset to the client.\n");
     return SCPI_RES_OK;
 }
+
+scpi_result_t RP_GenTimestampQ(scpi_t *context){
+    uint64_t value;
+    rp_GetGenTimestamp(&value);
+
+    SCPI_ResultUInt64Base(context, value, 10);
+    return SCPI_RES_OK;
+}
+
+scpi_result_t RP_GenTimestampTrigQ(scpi_t *context){
+    rp_channel_t channel;
+
+    if (RP_ParseChArgv(context, &channel) != RP_OK){
+        return SCPI_RES_ERR;
+    }
+    if(channel != RP_CH_1 || channel != RP_CH_2){
+        return SCPI_RES_ERR;
+    }
+
+    uint64_t value;
+    rp_GetGenTrigTimestamp(channel, &value);
+
+    SCPI_ResultUInt64Base(context, value, 10);
+    return SCPI_RES_OK;
+}
 #else
+
 scpi_result_t RP_GenAmplitude(scpi_t *context) {
     
     rp_channel_t channel;

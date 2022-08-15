@@ -977,5 +977,21 @@ scpi_result_t RP_AcqExtTriggerLevelQ(scpi_t *context) {
     return SCPI_RES_OK;
 }
 
+scpi_result_t RP_AcqTimestampQ(scpi_t *context){
+    uint64_t value;
+    rp_GetAcqTimestamp(&value);
+
+    SCPI_ResultUInt64Base(context, value, 10);
+    return SCPI_RES_OK;
+}
+
+scpi_result_t RP_AcqTimestampTrigQ(scpi_t *context){
+    uint64_t value;
+    rp_GetAcqTrigTimestamp(&value);
+
+    SCPI_ResultUInt64Base(context, value, 10);
+    return SCPI_RES_OK;
+}
+
 
 #endif

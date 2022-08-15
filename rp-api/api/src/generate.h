@@ -98,14 +98,15 @@ typedef struct generate_control_s {
     ch_properties_t properties_chA;
     ch_properties_t properties_chB;
 #ifndef Z20_250_12
+    uint32_t     BurstFinalValue_chA;
+    uint32_t     BurstFinalValue_chB;
+#else
     uint32_t timestamp_low;
     uint32_t timestamp_high;
     uint32_t timestamp_trig_a_low;
     uint32_t timestamp_trig_a_high;
     uint32_t timestamp_trig_b_low;
     uint32_t timestamp_trig_b_high;
-    //uint32_t     BurstFinalValue_chA;
-    //uint32_t     BurstFinalValue_chB;
 #endif
 } generate_control_t;
 

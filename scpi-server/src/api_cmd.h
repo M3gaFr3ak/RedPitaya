@@ -26,4 +26,5 @@ scpi_result_t RP_PllControl(scpi_t *context);
 scpi_result_t RP_PllControlQ(scpi_t *context);
 scpi_result_t RP_PllControlLockedQ(scpi_t *context);
 scpi_result_t RP_PllControlDetectedQ(scpi_t *context);
+scpi_result_t RP_TimestampQ(scpi_t *context);
 #endif /* API_CMD_H_ */

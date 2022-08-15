@@ -978,6 +978,31 @@ int rp_GetTimestamp(uint64_t *timestamp) {
     return house_GetTimestamp(timestamp);
 }
 
+int rp_GetAcqTimestamp(uint64_t *timestamp) {
+    return osc_GetTimestamp(timestamp);
+}
+
+int rp_GetAcqTrigTimestamp(uint64_t *timestamp) {
+    return osc_GetTrigTimestamp(timestamp);
+}
+
+int rp_GetGenTimestamp(uint64_t *timestamp) {
+    return generate_GetTimestamp(timestamp);
+}
+
+int rp_GetGenTrigTimestamp(rp_channel_t channel, uint64_t *timestamp) {
+    switch (channel)
+    {
+    case RP_CH_1:
+        return generate_GetTrigATimestamp(timestamp);
+    case RP_CH_2:
+        return generate_GetTrigBTimestamp(timestamp);
+    
+    default:
+        return -1;
+    }
+}
+
 #ifdef Z20_250_12
 int rp_GenSetGainOut(rp_channel_t channel,rp_gen_gain_t mode){
     return gen_setGainOut(channel,mode);

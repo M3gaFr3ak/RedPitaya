@@ -65,6 +65,8 @@ scpi_result_t RP_AcqAC_DC(scpi_t * context);
 scpi_result_t RP_AcqAC_DCQ(scpi_t * context);
 scpi_result_t RP_AcqExtTriggerLevel(scpi_t *context);
 scpi_result_t RP_AcqExtTriggerLevelQ(scpi_t *context);
+scpi_result_t RP_AcqTimestampQ(scpi_t *context);
+scpi_result_t RP_AcqTimestampTrigQ(scpi_t *context);
 #endif
 
 #endif /* ACQUIRE_H_ */

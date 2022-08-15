@@ -49,6 +49,8 @@ scpi_result_t RP_GenTriggerSource(scpi_t * context);
 scpi_result_t RP_GenTriggerSourceQ(scpi_t * context);
 scpi_result_t RP_GenTrigger(scpi_t *context);
 scpi_result_t RP_GenTriggerBoth(scpi_t *context);
+scpi_result_t RP_GenTimestampQ(scpi_t *context);
+scpi_result_t RP_GenTimestampTrigQ(scpi_t *context);
 
 
 #endif /* GENERATE_H_ */

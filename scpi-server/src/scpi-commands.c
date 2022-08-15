@@ -136,6 +136,7 @@ static const scpi_command_t scpi_commands[] = {
     {.pattern = "RP:PLL?", .callback                    = RP_PllControlQ,},
     {.pattern = "RP:PLL:LOCk?", .callback               = RP_PllControlLockedQ,},
     {.pattern = "RP:PLL:DETected?", .callback           = RP_PllControlDetectedQ,},
+    {.pattern = "RP:TIMEstamp?", .callback              = RP_TimestampQ,},
 #endif
     {.pattern = "DIG:RST", .callback                    = RP_DigitalPinReset,},
     {.pattern = "DIG:PIN", .callback                    = RP_DigitalPinState,},
@@ -184,6 +185,8 @@ static const scpi_command_t scpi_commands[] = {
     {.pattern = "ACQ:SOUR#:COUP?", .callback            = RP_AcqAC_DCQ,},
     {.pattern = "ACQ:TRIG:EXT:LEV", .callback           = RP_AcqExtTriggerLevel,},
     {.pattern = "ACQ:TRIG:EXT:LEV?", .callback          = RP_AcqExtTriggerLevelQ,},
+    {.pattern = "ACQ:TIMEstamp?", .callback             = RP_AcqTimestampQ,},
+    {.pattern = "ACQ:TRIG:TIMEstamp?", .callback        = RP_AcqTimestampTrigQ,},
 #endif
 
     /* Generate */
@@ -218,6 +221,10 @@ static const scpi_command_t scpi_commands[] = {
     {.pattern = "SOUR#:TRIG:SOUR", .callback            = RP_GenTriggerSource,},
     {.pattern = "SOUR#:TRIG:SOUR?", .callback           = RP_GenTriggerSourceQ,},
     {.pattern = "SOUR#:TRIG:INT", .callback             = RP_GenTrigger,},
+#ifdef Z20_250_12
+    {.pattern = "SOUR:TIMEstamp?", .callback             = RP_GenTimestampQ,},
+    {.pattern = "SOUR#:TRIG:TIMEstamp?", .callback        = RP_GenTimestampTrigQ,},
+#endif
 
     SCPI_CMD_LIST_END
 };
