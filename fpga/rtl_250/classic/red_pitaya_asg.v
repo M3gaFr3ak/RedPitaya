@@ -154,11 +154,18 @@ end
 assign trig_out_o = trig_a_done ;
 
 // Timestamp
+reg [1:0] trig_a_ed;
+reg [1:0] trig_b_ed;
 always @(posedge dac_clk_i)
 begin
-   if (trig_a_done == 1'b0)
+   trig_a_ed[1] <= trig_a_ed[0];
+   trig_a_ed[0] <= trig_a_done;
+
+   trig_b_ed[1] <= trig_b_ed[0];
+   trig_b_ed[0] <= trig_b_done;
+   if (!trig_a_ed[1] && trig_a_ed[0])
       trig_a_timestamp <= timestamp;
-   if (trig_b_done == 1'b0)
+   if (!trig_b_ed[1] && trig_b_ed[0])
       trig_b_timestamp <= timestamp;
 end
 

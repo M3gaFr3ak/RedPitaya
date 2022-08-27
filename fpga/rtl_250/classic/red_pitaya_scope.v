@@ -287,9 +287,12 @@ end else begin
 end
 
 //Timestamp
+reg [1:0] trig_ed;
 always @(posedge adc_clk_i)
 begin
-   if (adc_trig == 1'b0)
+   trig_ed[1] <= trig_ed[0];
+   trig_ed[0] <= adc_trig;
+   if (!trig_ed[1] && trig_ed[0])
       trig_timestamp <= timestamp;
 end
 
