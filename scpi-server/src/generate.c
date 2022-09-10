@@ -909,15 +909,15 @@ scpi_result_t RP_GenTimestampQ(scpi_t *context){
 
 scpi_result_t RP_GenTimestampTrigQ(scpi_t *context){
     rp_channel_t channel;
-
+    uint64_t value;
+    
     if (RP_ParseChArgv(context, &channel) != RP_OK){
         return SCPI_RES_ERR;
     }
-    if(channel != RP_CH_1 || channel != RP_CH_2){
+    if(channel != RP_CH_1 && channel != RP_CH_2){
         return SCPI_RES_ERR;
     }
-
-    uint64_t value;
+    
     rp_GetGenTrigTimestamp(channel, &value);
 
     SCPI_ResultUInt64Base(context, value, 10);
